@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .color{
+            color:#4d2;
+        }
+        .font{
+            font-weight:800;
+        }
+        .italic{
+            font-style:italic;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <p :class="['color','font',flag?'italic':'']">nihaoddddd</p>
+    <p :class="['color','font',{'italic':flag}]">nihaoddddd</p>
+    <p :class="classObj">nihaoddddd</p>
+  <p :style="[style,jj]">ddddaaaa</p>
+</div>
+<script src="vue-2.4.0.js"></script>
+<script>
+    var vm=new Vue({
+        el:'#app',
+        data:{
+            flag:true,
+            classObj:{color:true,font:false,italic:true},
+            style:{
+                'font-style':800,
+                'color':'red'
+            },
+            jj:{
+                'text-align':'center'
+            }
+        },
+        methods:{}
+    })
+</script>
+</body>
+</html>

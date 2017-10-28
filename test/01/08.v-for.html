@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        [v-cloak]{
+            display:none;
+        }
+    </style>
+</head>
+<body>
+ <div id="app">
+     <ul>
+         <li  v-cloak v-for="(item,i) in list">{{i}}==={{item}}</li>
+     </ul>
+     <p v-for="(user,i) in arr">{{user.name}}</p>
+     <a href="#" v-for="(val,key,i) in user">{{key}}===={{val}}</a>
+     <div v-for="count in 10">{{count}}</div>
+ </div>
+ <script src="vue-2.4.0.js"></script>
+ <script>
+     var vm=new Vue({
+         el:'#app',
+         data:{
+             list:[1,3,4,5,5],
+             arr:[
+                 {id:1,name:'zs1'},
+                 {id:2,name:'zs2'},
+                 {id:3,name:'zs3'},
+                 {id:4,name:'zs4'}
+             ],
+
+                 user: {
+                     id: 1,
+                     name: '托尼·屎大颗',
+                     gender: '男'
+                 }
+
+         },
+         methods:{
+
+         }
+     })
+ </script>
+</body>
+</html>

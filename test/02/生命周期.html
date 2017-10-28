@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue-2.4.0.js"></script>
+</head>
+<body>
+<div id="app">
+    <p>{{msg}}</p>
+    <button @click="msg='no'">show</button>
+</div>
+<script>
+    var vm=new Vue({
+        el:'#app',
+        data:{
+            msg:'yes!'
+        },
+        methods:{
+            show(){
+                console.log('show');
+            }
+        },
+        beforeCreate(){//创建阶段的第一个周期函数
+//                实例被完全创建出来之前会执行，data和methods中的数据还没有初始化
+            console.log(this.msg); //undefined
+            this.show(); //报错
+        },
+        created(){ // 初始化了data和methods内存中的
+            console.log(this.msg); //yes！
+            this.show(); // show
+        },
+        beforeMount(){ // 模版在内存中渲染好了，但是还没挂载到页面上
+            console.log(document.getElementsByTagName('p')[0].innerText); //{{msg}};
+        },
+        mounted(){ //模版同步到了页面上
+            console.log(document.getElementsByTagName('p')[0].innerText); //yes!;
+        },
+//        运行阶段
+        beforeUpdate(){
+            console.log(this.msg); // no  data中已更改
+            console.log(document.getElementsByTagName('p')[0].innerText); // 页面中没有同步
+        },
+        updated(){
+            console.log(document.getElementsByTagName('p')[0].innerText); //页面已经同步
+        }
+//销毁阶段  --关闭浏览器时
+        beforeDestroy(){
+            // data methods 过滤器 指令 等等都还处于可以用状态
+        },
+        destroy(){
+//都解绑，不可用了
+        }
+    })
+</script>
+</body>
+</html>

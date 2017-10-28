@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue-2.4.0.js"></script>
+</head>
+<body>
+<div id="app">
+    <p>{{msg | msgFormat('你好','no')}}</p>
+</div>
+<script>
+ Vue.filter('msgFormat',function(msg,arg1,arg2){
+//     不能再 /中直接使用变量/  需另外定义RegExp对象的形式使用变量
+     var re=new RegExp(arg1,'g');
+     return msg.replace(re,arg2);
+//     或者通过eval函数
+     return msg.replace(eval('/'+arg1+'/g'),arg2);
+ });
+    var vm=new Vue({
+        el:'#app',
+        data:{
+            msg:'你好都没佛法你好的罚款扣分你好'
+        }
+    })
+</script>
+</body>
+</html>

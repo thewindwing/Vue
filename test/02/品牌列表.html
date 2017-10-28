@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="lib/bootstrap-3.3.7.css">
+</head>
+<body>
+<div class="container" id="app">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">添加品牌</h3>
+        </div>
+        <div class="panel-body form-inline">
+            <!--<form class=''>-->
+                <label>
+                    Id:<input type="text" class="form-control" v-model="id">
+                </label>
+            <!--</form>-->
+            <label>
+               Name:<input type="text" class="form-control" v-model="name" @keyup.enter="add()">
+            </label>
+            <button class="btn btn-primary" @click="add()">添加</button>
+            <label>
+                搜索名称关键字：
+                <input type="search" class="form-control" v-model="keywords" v-focus>
+            </label>
+        </div>
+    </div>
+    <table class="table table-striped table-hover table-bordered">
+    <thead>
+    <tr class="text-center">
+        <th>Id</th>
+        <th>Name</th>
+        <th>Ctime</th>
+        <th>Operation</th>
+    </tr>
+    </thead>
+        <tbody>
+            <tr v-for="item in search(keywords)" :key="item.id">
+                <td v-color="'red'" v-fontweight="900" v-fontsize="'50px'" v-fontstyle="'italic'">{{item.id}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.ctime | dateFormat()}}</td>
+                <td><a href="#" @click.prevent="del(item.id)">删除</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="lib/vue-2.4.0.js"></script>
+<!--由于Vue思想就是不操作DOM，所以不引用jQuery-->
+<script>
+//    <!--全局过滤器-->
+Vue.filter('dateFormat',function(data,pattern=''){
+    var dt=new Date(data);
+//    console.log(data,dt, data.getFullYear())
+    var y=dt.getFullYear().toString().padStart(2,'0');
+    var m=(dt.getMonth()+1).toString().padStart(2,'0');
+    var d=dt.getDate().toString().padStart(2,'0');
+//    当没参数时，pattern为undefined，所以为其设置个默认值pattern=‘’
+    if(pattern.toLowerCase()=='yyyy-mm-dd'){
+        return `${y}-${m}-${d}`
+    }else{
+        var hh=dt.getHours().toString().padStart(2,'0');
+        var mm=dt.getMinutes().toString().padStart(2,'0');
+        var ss=dt.getSeconds().toString().padStart(2,'0');
+//        当数字为小于10的数字时，显示个位数，要自动填充两位----ES6字符串的方法str.padStart()
+        return `${y}-${m}-${d} ${hh}:${mm}:${ss}`
+    }
+
+});
+//自定义键盘修饰符
+Vue.config.keyCodes.a=65;
+// 自定义指令，获取焦点
+Vue.directive('focus',{
+    bind(el,binding){
+
+    },
+    inserted(el,binding){
+        el.focus();
+        console.log(el,binding);
+    },
+    update(){
+
+    }
+});
+Vue.directive('color',{
+    bind(el,binding){
+        el.style.color=binding.value;
+    }
+});
+    var vm=new Vue({
+        el:'#app',
+        data:{
+            id:'',
+            name:'',
+            list:[],
+            keywords:''
+        },
+        methods:{
+            add(){
+                this.list.push({id:this.id,name:this.name,ctime:new Date()});
+                this.id=this.name='';
+            },
+            del(id){
+//                查找id对应的项，找到则删除
+               /* this.list.some((item,i)=>{
+                    if(item.id==id){
+                    this.list.splice(i,1);
+                    return true;
+                }
+                })*/
+                var index=this.list.findIndex(item=>{
+                    if(item.id==id){
+                    return true;
+                }
+                })
+               this.list.splice(index,1)
+            },
+            search(kwd){
+//                根据关键字，筛选数组中的包含项
+               return this.list.filter(item=>{
+                   /* if(item.name.indexOf(kwd)!=-1){
+                    return item;
+                }*/
+                           if(item.name.includes(kwd)){
+                    return item;
+                }
+                })
+            }
+        },
+        directives:{
+            'fontweight':{
+                bind:function(el,binding){
+                    el.style.fontWeight=binding.value;
+                }
+            },
+            'fontsize':{
+                bind:function(el,binding){
+                    el.style.fontSize=binding.value;
+                }
+            },
+            'fontstyle':function(el,binding){
+                el.style.fontStyle=binding.value;
+            }
+        }
+      /*  filters:{
+            'dateFormat':function(date,pattern=''){
+                var dt=new Date(date);
+                var y=dt.getFullYear().toString().padEnd(2,0);
+                var mm=dt.getMinutes().toString().padEnd(2,0);
+var ss=dt.getSeconds().toString().padEnd(2,0);
+var ms=dt.getMilliseconds().toString().padStart(4,0);
+return `${mm}:${ss}:${ms}`;
+        }
+        }*/
+    })
+</script>
+</body>
+</html>

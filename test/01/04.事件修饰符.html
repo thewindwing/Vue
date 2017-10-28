@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        div#div1{
+            background-color:darkcyan;
+            height:100px;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <div id="div1" @click.capture.self="div1">
+        <button @click.stop="btn">btn</button>
+        <a href="http://www.baidu.com" @click.once.prevent="a">link</a>
+    </div>
+
+</div>
+
+<script src="vue-2.4.0.js"></script>
+<script>
+    var vm=new Vue({
+        el:'#app',
+        data:{},
+        methods:{
+            div1(){
+                console.log(1)
+            },
+            btn(){
+                console.log(2)
+            },
+            a(){
+                console.log('a')
+            }
+        }
+    })
+</script>
+</body>
+</html>

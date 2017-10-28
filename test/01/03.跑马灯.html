@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        [v-cloak]{
+            display:none;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <button @click="start">开始</button>
+    <button v-on:click="stop">暂停</button>
+    <p v-cloak>{{msg}}</p>
+</div>
+
+<script src="vue-2.4.0.js"></script>
+<script>
+    var vm=new Vue({
+        el:'#app',
+        data:{
+            msg:'已是悬崖百丈冰，&&&犹有花枝俏！',
+            intervalId:null
+        },
+        methods:{
+
+            start(){
+                if(this.intervalId) return;
+                this.intervalId=setInterval(()=>{
+                    var str=this.msg.substring(0,1);
+                    this.msg=this.msg.substr(1)+str;
+                },200);
+
+            },
+            stop(){
+               clearInterval(this.intervalId);
+                this.intervalId=null;
+            }
+        }
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <p>{{msg}}</p>
+    <input type="text" v-model="msg">
+    <input type="address" v-model="msg">
+  <!--  <select name="" id="" v-model="msg">
+        <option value="1">{{msg}}</option>
+        <option value="1">{{msg+1}}</option>
+    </select>-->
+</div>
+
+<script src="vue-2.4.0.js"></script>
+<script>
+    var vm=new Vue({
+        el:'#app',
+        data:{
+            msg:'1'
+        },
+        methods:{
+
+        }
+    })
+</script>
+</body>
+</html>

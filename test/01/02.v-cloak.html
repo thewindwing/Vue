@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        [v-cloak]{
+            display:none;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <p v-cloak>+++{{msg}}555</p>
+    <p v-text="msg">gggg</p>
+    <p v-html="my">html</p>
+    <input type="button" v-bind:title="msg" value="btn" v-on:click="show">
+    <a href="#" :title="msg+'123'" @click="hide">{{msg2}}</a>
+</div>
+
+
+<script src="vue-2.4.0.js"></script>
+<script>
+    var vm=new Vue({
+        el:'#app',
+        data:{
+            msg:'jdddd',
+            msg2:'2222',
+            my:'<h1>ddddg</h1>'
+        },
+        methods:{
+            show(){
+                alert(1)
+            },
+            hide:function(){
+                alert('2')
+            }
+        }
+    })
+</script>
+</body>
+</html>

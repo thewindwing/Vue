@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <input type="button" value="toggle" @click="toggle">
+    <h3 v-if="flag">v-if</h3>
+    <h3 v-show="flag">v-show</h3>
+</div>
+<script src="vue-2.4.0.js"></script>
+<script>
+    var vm=new Vue({
+        el:'#app',
+        data:{
+            flag:true
+        },
+        methods:{
+            toggle(){
+                this.flag=!(this.flag);
+            }
+        }
+    })
+</script>
+</body>
+</html>
